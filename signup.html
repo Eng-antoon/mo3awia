@@ -21,28 +21,28 @@
 <style>
     body {
         font-family: 'Hammersmith One', sans-serif;
-    margin: 0;
-    padding: 0;
-    width: fit-content;
-    background-position-x: center;
-    background-position-y: center;
+        margin: 0;
+        padding: 0;
+        width: fit-content;
+        background-position-x: center;
+        background-position-y: center;
 
     }
 
     .container {
         position: absolute;
-    margin: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: fit-content;
-    width: fit-content;
-    background: rgba(255, 255, 255, 0.68);
-    border-radius: 10px;
-    box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
-    text-align: center;
-    padding: 15px 0;
+        margin: auto;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: fit-content;
+        width: fit-content;
+        background: rgba(255, 255, 255, 0.68);
+        border-radius: 10px;
+        box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11), 0 5px 15px 0 rgba(0, 0, 0, 0.08);
+        text-align: center;
+        padding: 15px 0;
     }
 
     .container span {
@@ -56,6 +56,7 @@
     }
 
     .container input[type="text"],
+    .container input[type="email"],
     .container input[type="password"],
     .container input[type="tel"] {
         font-family: 'Hammersmith One', sans-serif;
@@ -68,6 +69,7 @@
     }
 
     .container input[type="text"]:focus,
+    .container input[type="email"]:focus,
     .container input[type="password"]:focus,
     .container input[type="tel"]:focus {
         outline: none;
@@ -145,19 +147,21 @@
         <span>Create Account</span>
         <!--a7na hna 3mlna form 3shan ndeha css we tzabat shakl al saf7a kolha -->
         <form>
-            <label for="Email">Email<input id="emailadd" type="text"></label>
-            <label for="Username">Username<input id="username1" type="text"></label>
+            <label for="Email">Email<input id="emailadd" placeholder="name@email.com"  type="email"></label>
+            <label for="Username">Username<input id="username1" placeholder="Use charachters and numbers only"  type="text" pattern="^@[A-Za-z0-9_]"></label>
             <!--hna 3mlna div asmo passtap 3shan n5ly al input bta3 al password we al checkbox yb2o gamb b3d we shaklohom ykon a7san -->
             <div id="passtap">
                 <label for="Password">Password<input placeholder="Enter more than 8 charachter" id="password1"
                         type="password"></label>
                 <input type="checkbox" onclick="myFunction()">Show Password
             </div>
+            <label for="Password">Confirm Password<input placeholder="Write the same password" id="password2"
+                    type="password"></label>
 
-            <label for="Phonenumber">Phone number<input id="tele" type="tel"></label>
-            <label for="orgphone">Organization Phone number<input id="orgphone" type="tel"></label>
-            <label for="macadd">Mac address<input id="macadd" type="text"></label>
-            <label for="carnum">Car number<input id="carnum" type="text"></label>
+            <label for="Phonenumber">Phone number<input id="tele" placeholder="Enter your mobile numbers" type="tel"></label>
+            <label for="orgphone">Organization Phone number<input id="orgphone" placeholder="Enter organization phone number" type="tel"></label>
+            <label for="macadd">Mac address<input id="macadd" placeholder="Enter your Mac Address" type="text"></label>
+            <label for="carnum">Car number<input id="carnum" placeholder="Enter your Car number" type="text"></label>
             <input id="butconf" type="button" value="Sign Up">
         </form>
 
@@ -178,7 +182,9 @@
         var macadd = $('#macadd').val();
         var carnum = $('#carnum').val();
         //hna 3mlna if condition 3shan mayb3atsh ay 7aga lldata base ela lma ykon kol al 5anat malyana we lo fe 7aga na2sa byro7 ynafz al (else) we al else dy maktob fiha ano yzhrlo msg bt2olo kaml al bianat we kaman 7atena condition ano lo da5al password a2l mn 8 yro7 ynafz else bardo 
-        if (Email != '' && User != '' && pass != '' && telephone != '' && orgphone != '' && macadd != '' && carnum != '' && pass.length > 8) {
+        if (Email != '' && User != '' && pass != '' && telephone != '' && orgphone != '' && macadd != '' && carnum != '' && pass.length > 8 && pass == document.getElementById("password2").value) {
+
+
             //hna ba2a a7na bn3araf mot9iar asmo Object we al mot9ier dah bn7ot goah kiam kteer zy al email we al password we al 7agat dy 
             var object = { email: Email, username: User, password: pass, Phonenumber: telephone, organizationphone: orgphone, macaddress: macadd, carnumber: carnum, time: new Date() };
             //al satr dah hoa aly mabny 3leeh al data base kolha 3shan hoa hna bya5od al mota9ier dah we yro7 yb3ato lldatabase we y2olo da5lha 3ndak  
@@ -188,17 +194,49 @@
             $('#emailadd').val('');
             $('#username1').val('');
             $('#password1').val('');
+            $('#password2').val('');
             $('#tele').val('');
             $('#orgphone').val('');
             $('#macadd').val('');
             $('#carnum').val('');
 
-        } else {
+        }
+        if (Email == '') {
+            alert("Please enter the email address");
+        }
 
-            alert("Please complete your Data!");
+        if (User == '') {
+
+            alert("Please enter the Username");
+        }
+
+
+        if (pass < 8 || $('password1') != $('#password2')) {
+            alert("Please enter your password again");
+            $('#password1').val('');
+            $('#password2').val('');
+        }
+
+        if (telephone == '') {
+            alert("Please enter Phone number");
 
         }
 
+        if (orgphone == '') {
+            alert("Please enter organization Phone number");
+        }
+
+
+        if (macadd == '') {
+            alert("Please enter mac address");
+
+        }
+
+        if (carnum == '') {
+            alert("Please enter Car number");
+
+
+        }
     }
 
     //hna bn2olo lma tdos 3la al button aly wa5d ID butconf yro7 ynafz al function aly asmha handle click
@@ -212,6 +250,7 @@
             x.type = "password";
         }
     }
+
 
 </script>
 
